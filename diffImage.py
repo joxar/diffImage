@@ -28,7 +28,7 @@ def diffAB(fileA, fileB, fileResult):
         min = np.nanmin(contour, 0)
         max = np.nanmax(contour, 0)
         loc1 = (min[0][0], min[0][1])
-        loc2 = (min[0][0], min[0][1])
+        loc2 = (max[0][0], max[0][1])
         cv2.rectangle(imgC, loc1, loc2, 255, 2)
 
     cv2.imwrite(fileResult, imgC)
