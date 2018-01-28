@@ -24,9 +24,9 @@ def diffAB(fileA, fileB, fileResult):
     _, result_window_bin = cv2.threshold(result_window, 127, 255, cv2.THRESH_BINARY)
     _, contours, _ = cv2.findContours(result_window_bin, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     imgC = imgA.copy()
-    for contours in contours:
-        min = np.nanmin(countour, 0)
-        max = np.nanmax(countour, 0)
+    for contour in contours:
+        min = np.nanmin(contour, 0)
+        max = np.nanmax(contour, 0)
         loc1 = (min[0][0], min[0][1])
         loc2 = (min[0][0], min[0][1])
         cv2.rectangle(imgC, loc1, loc2, 255, 2)
