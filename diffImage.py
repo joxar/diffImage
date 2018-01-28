@@ -22,7 +22,7 @@ def diffAB(fileA, fileB, fileResult):
             result_window[start_y:start_y+100, start_x:start_x+100] = result
 
     _, result_window_bin = cv2.threshold(result_window, 127, 255, cv2.THRESH_BINARY)
-    _, contours, _ = cv2.findContours(result_window_bin, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX)
+    _, contours, _ = cv2.findContours(result_window_bin, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     imgC = imgA.copy()
     for countour in contours:
         min = np.nanmin(countour, 0)
