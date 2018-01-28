@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 
-def diffAB(fileA, fileB):
+def diffAB(fileA, fileB, fileResult):
     imgA = cv2.imread(fileA)
     imgB = cv2.imread(fileB)
 
@@ -21,6 +21,16 @@ def diffAB(fileA, fileB):
             result = cv2.absdiff(window, matched_window)
             result_window[start_y:start_y+100, start_x:start_x+100] = result
 
-    plt.imshow(result_window)
+    _, result_window_bin = cv2.threshold(result_window, 127, 255, cv2.THRESH_BINARY)
+    _, contours, _ = cv2.findCountours(result_window_bin, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX)
+    imgC = imgA.copy()
+    for countour in contours:
+        min = np.nanmin(countour, 0)
+        max = np.nanmax(countour, 0)
+        loc1 = (min[0][0], min[0][1])
+        loc2 = (min[0][0], min[0][1])
+        cv2.rectangle(imgC, loc1, loc2, 255, 2)
 
-diffAB('./fileA.jpg', './fileB.jpg')
+    cv2.imwrite(fileResult, imgC)
+
+diffAB('./fileA.jpg', './fileB.jpg', 'diffResult.jpg')
